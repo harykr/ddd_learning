@@ -1,5 +1,6 @@
 package model
 
 type Item struct {
-	Name      string
+	Name     string
+	Quantity int
 }
