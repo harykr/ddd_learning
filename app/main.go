@@ -69,4 +69,9 @@ func main() {
 	fmt.Println("Removed Items", cart2.RemovedItems)
 	fmt.Println("Cart Equals", cart1.Equals(cart2))
 
+	order1 := model.Order{Id: uuid.New()}
+	order1 = order1.Place(cart1)
+
+	fmt.Println(order1)
+
 }
