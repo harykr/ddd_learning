@@ -8,7 +8,7 @@ func NewAccount(address Address) Account {
 	return Account{Address: address}
 }
 
-func (a Account) UpdateAddress(address Address) Account {
+func (a Account) updateAddress(address Address) Account {
 	a.Address = address
 	return a
 }

@@ -15,7 +15,7 @@ func NewCustomer(accounts []Account, address Address) Customer {
 func (c Customer) UpdateAddress(address Address) Customer {
 	var tempAccounts []Account
 	for _, account := range c.Account {
-		tempAccounts = append(tempAccounts, account.UpdateAddress(address))
+		tempAccounts = append(tempAccounts, account.updateAddress(address))
 	}
 	c.Account = tempAccounts
 	c.Address = address

@@ -8,13 +8,13 @@ import (
 func main() {
 	var accounts []model.Account
 	address1 := model.NewAddress("Chennai")
-	address2 := model.NewAddress("Coimbatorw")
+	address2 := model.NewAddress("Coimbatore")
 
 	accounts = append(accounts, model.NewAccount(address1))
 	accounts = append(accounts, model.NewAccount(address1))
 	customer := model.NewCustomer(accounts, address1)
-	fmt.Println("Before Update", customer)
 
+	fmt.Println("Before Update", customer)
 	customer = customer.UpdateAddress(address2)
 	fmt.Println("After Update", customer)
 }
