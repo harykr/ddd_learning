@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/bradfitz/iter"
 	"github.com/google/uuid"
 )
 
@@ -42,4 +43,14 @@ func (c Cart) Equals(cart Cart) bool {
 
 func (c Cart) CheckOut() {
 	c.IsCheckedOut = true
+}
+
+func (c Cart) Products() ([]Product) {
+	var products []Product
+	for _, item := range c.Items {
+		for _ = range iter.N(item.Quantity) {
+			products = append(products, item.Product)
+		}
+	}
+	return products
 }

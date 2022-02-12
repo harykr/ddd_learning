@@ -5,9 +5,9 @@ type Price struct {
 	Currency string
 }
 
-func InitializePrice(value float64, currency string) Price {
+func InitializePrice(value float64) Price {
 	return Price{
 		Value:    value,
-		Currency: currency,
+		Currency: "INR",
 	}
 }
