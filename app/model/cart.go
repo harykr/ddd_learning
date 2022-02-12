@@ -8,6 +8,7 @@ type Cart struct {
 	Id           uuid.UUID
 	Items        []Item
 	RemovedItems []Item
+	IsCheckedOut bool
 }
 
 func NewCart() Cart {
@@ -37,4 +38,8 @@ func (c Cart) Remove(item Item) Cart {
 
 func (c Cart) Equals(cart Cart) bool {
 	return c.Id == cart.Id
+}
+
+func (c Cart) CheckOut() {
+	c.IsCheckedOut = true
 }

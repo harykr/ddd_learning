@@ -8,7 +8,6 @@ import (
 type Order struct {
 	Id           uuid.UUID
 	Products     []Product
-	IsCheckedOut bool
 }
 
 func NewOrder() Order {
@@ -23,6 +22,6 @@ func (o Order) Place(cart Cart) Order {
 		}
 	}
 	o.Products = products
-	o.IsCheckedOut = len(products) != 0
+	cart.CheckOut()
 	return o
 }
