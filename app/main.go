@@ -4,74 +4,38 @@ import (
 	"awesomeProject/app/model"
 	"awesomeProject/app/model/service"
 	"fmt"
-	"github.com/google/uuid"
 )
 
 func main() {
 
-	cart1 := model.Cart{Id: uuid.New()}
-	cart2 := model.Cart{Id: uuid.New()}
+	cart1 := model.NewCart()
+	cart2 := model.NewCart()
 
-	iPadPro := model.Product{Name: "iPad Pro", Price: model.Price{Value: 23000, Currency: "INR"}}
-	heroPen := model.Product{Name: "Hero ink Pen", Price: model.Price{Value: 1300, Currency: "INR"}}
-	cricketBat := model.Product{Name: "GM Cricket bat", Price: model.Price{Value: 2300, Currency: "INR"}}
+	iPadPro := model.NewProduct("iPad Pro", model.InitializePrice(23000, "INR"))
+	heroPen := model.NewProduct("Hero ink Pen", model.InitializePrice(23000, "INR"))
+	cricketBat := model.NewProduct("GM Cricket bat", model.InitializePrice(23000, "INR"))
+	iPadProNew := model.NewProduct(iPadPro.Name, service.CalculateDiscountedPrice(iPadPro))
 
+	cricketBatItem := model.NewItem(cricketBat, 2)
 
-	iPadProNew := iPadPro
-	iPadProNew = service.CalculateDiscountedPrice(iPadProNew, iPadPro)
-
-	cart1 = cart1.Add(model.Item{
-		Id:       uuid.New(),
-		Product:  iPadProNew,
-		Quantity: 1,
-	})
-
-	cart1 = cart1.Add(model.Item{
-		Id:       uuid.New(),
-		Product:  heroPen,
-		Quantity: 1,
-	})
-
-	cart1 = cart1.Add(model.Item{
-		Id:       uuid.New(),
-		Product:  cricketBat,
-		Quantity: 2,
-	})
+	cart1 = cart1.Add(model.NewItem(iPadProNew, 1))
+	cart1 = cart1.Add(model.NewItem(heroPen, 1))
+	cart1 = cart1.Add(model.NewItem(cricketBat, 2))
 
 	fmt.Println("Cart1 Items", cart1.Items)
+	fmt.Println("Cart1 Items", cart1.RemovedItems)
 
-	cart2 = cart2.Add(model.Item{
-		Id:       uuid.New(),
-		Product:  iPadPro,
-		Quantity: 1,
-	})
+	cart2 = cart2.Add(cricketBatItem)
+	cart2 = cart2.Add(model.NewItem(iPadProNew, 1))
+	cart2 = cart2.Add(model.NewItem(heroPen, 1))
+	cart2 = cart2.Remove(cricketBatItem)
 
-	cart2heroPenId := uuid.New()
-	cart2 = cart2.Add(model.Item{
-		Id:       cart2heroPenId,
-		Product:  heroPen,
-		Quantity: 1,
-	})
+	fmt.Println("Cart2 Items", cart2.Items)
+	fmt.Println("Cart2 Items", cart2.RemovedItems)
 
-	cart2 = cart2.Add(model.Item{
-		Id:       uuid.New(),
-		Product:  cricketBat,
-		Quantity: 2,
-	})
-
-	fmt.Println("Cart2 Items Before Removal", cart2.Items)
-	cart2 = cart2.Remove(model.Item{
-		Id:       cart2heroPenId,
-		Product:  heroPen,
-		Quantity: 1,
-	})
-	fmt.Println("Cart2 Items After Removal", cart2.Items)
-	fmt.Println("Removed Items", cart2.RemovedItems)
-	fmt.Println("Cart Equals", cart1.Equals(cart2))
-
-	order1 := model.Order{Id: uuid.New()}
+	order1 := model.NewOrder()
 	order1 = order1.Place(cart1)
 
-	fmt.Println(order1)
+	fmt.Println("Order for Cart 1", order1)
 
 }

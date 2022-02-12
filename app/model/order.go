@@ -6,8 +6,13 @@ import (
 )
 
 type Order struct {
-	Id       uuid.UUID
-	Products []Product
+	Id           uuid.UUID
+	Products     []Product
+	IsCheckedOut bool
+}
+
+func NewOrder() Order {
+	return Order{Id: uuid.New()}
 }
 
 func (o Order) Place(cart Cart) Order {
@@ -18,5 +23,6 @@ func (o Order) Place(cart Cart) Order {
 		}
 	}
 	o.Products = products
+	o.IsCheckedOut = len(products) != 0
 	return o
 }

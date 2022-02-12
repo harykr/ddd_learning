@@ -10,6 +10,10 @@ type Cart struct {
 	RemovedItems []Item
 }
 
+func NewCart() Cart {
+	return Cart{Id: uuid.New()}
+}
+
 func (c Cart) Add(item Item) Cart {
 	tempItems := c.Items
 	tempItems = append(tempItems, item)
